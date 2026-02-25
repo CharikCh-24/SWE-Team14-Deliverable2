@@ -1,0 +1,10 @@
+{
+    "java.configuration.updateBuildConfiguration": "interactive",
+    "java.compile.nullAnalysis.mode": "automatic",
+    // exclude the nested Gradle project when the parent folder is open
+    // prevents the language server from creating two projects named
+    // "theatreBooking" and triggering the duplicate-root warning.
+    "java.project.import.exclusions": [
+        "Cinema_E-Booking_System/BackEndDev/theatreBooking"
+    ]
+}
