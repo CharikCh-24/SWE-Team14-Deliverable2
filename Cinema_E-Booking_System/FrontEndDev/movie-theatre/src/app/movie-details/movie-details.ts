@@ -10,6 +10,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { map, switchMap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { RadioButton, RadioButtonModule } from 'primeng/radiobutton';
 
 @Component({
   selector: 'app-movie-details',
@@ -19,13 +20,15 @@ import { Observable } from 'rxjs';
     ButtonModule,
     RatingModule,
     ProgressSpinnerModule,
-    FormsModule
+    FormsModule,
+    RadioButtonModule
   ],
   templateUrl: './movie-details.html',
   styleUrls: ['./movie-details.scss']
 })
 export class MovieDetails {
 
+  showTimes!: string;
   movie$!: Observable<Movie>;
   trailerUrl$!: Observable<SafeResourceUrl>;
 
