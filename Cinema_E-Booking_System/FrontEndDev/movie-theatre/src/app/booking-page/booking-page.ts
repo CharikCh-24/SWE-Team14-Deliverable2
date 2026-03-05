@@ -60,6 +60,19 @@ export class BookingPage {
       })
     );
   }
+  ngOnInit() {
+    this.route.paramMap.subscribe(params => {
+      const passedShowtime = params.get('showtime');
+      if (passedShowtime) {
+        this.showTimes = passedShowtime;
+      }
+    });
+    this.route.queryParams.subscribe(params => {
+      if (params['date']) {
+        this.selectedDate = new Date(params['date']);
+      }
+    });
+  }
 
   get totalTickets(): number {
     return this.adult + this.child + this.senior;
