@@ -19,7 +19,7 @@
 .main-booking-grid {
     display: grid;
     grid-template-columns: 320px 1fr;
-    gap: 80px;
+    gap: 40px;
     margin-top: 40px;
 }
 
@@ -70,9 +70,10 @@
 
 .column-numbers {
     display: grid;
-    grid-template-columns: 40px repeat(7, 60px);
+    grid-template-columns: 75px repeat(7, 60px);
     justify-content: center;
-    margin-bottom: 8px;
+    align-items: center;
+    margin-bottom: 10px;
     font-weight: 600;
 }
 
@@ -103,9 +104,17 @@
     transition: 0.2s ease;
 }
 
+.seat-icon {
+    width: 20px;
+    height: 20px;
+    border: #22c55e;
+    opacity: 0.8;
+}
+
 .seat.selected {
     background: #22c55e;
     color: white;
+    font-weight: 600;
 }
 
 .seat.disabled {
@@ -143,7 +152,9 @@
 }
 
 .checkout-wrapper {
-    margin-top: 40px;
+    grid-column: 1/ -1;
+    margin-top: 20px;
+    transform: translateX(-50px);
     display: flex;
     justify-content: center;
 }
