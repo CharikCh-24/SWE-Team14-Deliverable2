@@ -3,54 +3,38 @@ package theatreBooking;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "movie")
 public class Movie {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String title;
     private String genre;
-    @Column(name = "mpaa_rating")
-    private String mpaaRating;
 
-    @Column(name = "imdb_rating")
+    @Enumerated(EnumType.STRING)
+    private MovieStatus status;
+    private String mpaaRating;
     private Double imdbRating;
     private String director;
     private String producer;
 
     @Column(length = 2000)
     private String description;
-
     private String trailerUrl;
     private String posterUrl;
 
-    private String status; // CURRENTLY_RUNNING or COMING_SOON
+    @Column(columnDefinition = "BOOLEAN DEFAULT TRUE")
+    private boolean active = true;
 
-    // Constructors
-    public Movie() {
-    }
+    // @OneToMany(mappedBy = "movie")
 
-    public Movie(String title, String genre, String mpaaRating, Double imdbRating,
-            String director, String producer,
-            String description, String trailerUrl,
-            String posterUrl, String status) {
-        this.title = title;
-        this.genre = genre;
-        this.mpaaRating = mpaaRating;
-        this.imdbRating = imdbRating;
-        this.director = director;
-        this.producer = producer;
-        this.description = description;
-        this.trailerUrl = trailerUrl;
-        this.posterUrl = posterUrl;
-        this.status = status;
-    }
+    // private List<Favorites> favorites;
 
-    // Getters and Setters
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -67,6 +51,14 @@ public class Movie {
 
     public void setGenre(String genre) {
         this.genre = genre;
+    }
+
+    public MovieStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(MovieStatus status) {
+        this.status = status;
     }
 
     public String getMpaaRating() {
@@ -125,11 +117,21 @@ public class Movie {
         this.posterUrl = posterUrl;
     }
 
-    public String getStatus() {
-        return status;
+    public boolean isActive() {
+        return active;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setActive(boolean active) {
+        this.active = active;
     }
+
+    /*
+     * public List<Favorites> getFavorites() {
+     * return favorites;
+     * }
+     * 
+     * public void setFavorites(List<Favorites> favorites) {
+     * this.favorites = favorites;
+     * }
+     */
 }

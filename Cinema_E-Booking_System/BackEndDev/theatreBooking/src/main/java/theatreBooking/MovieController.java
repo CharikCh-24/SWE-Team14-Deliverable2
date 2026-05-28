@@ -1,8 +1,8 @@
 package theatreBooking;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -10,8 +10,11 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:4200")
 public class MovieController {
 
-    @Autowired
-    private MovieService movieService;
+    private final MovieService movieService;
+
+    public MovieController(MovieService movieService) {
+        this.movieService = movieService;
+    }
 
     @GetMapping
     public List<Movie> getAllMovies() {
@@ -36,5 +39,41 @@ public class MovieController {
     @GetMapping("/status")
     public List<Movie> getByStatus(@RequestParam String status) {
         return movieService.getByStatus(status);
+    }
+
+    @GetMapping("/show-date")
+    public List<Movie> searchByShowDate(@RequestParam String date) {
+        return movieService.searchByShowDate(date);
+    }
+
+    // Admin: add a new movie
+    @PostMapping
+    public ResponseEntity<?> addMovie(@RequestBody Movie movie) {
+        try {
+            return ResponseEntity.ok(movieService.addMovie(movie));
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
+
+    // Admin: update an existing movie
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateMovie(@PathVariable Long id, @RequestBody Movie movie) {
+        try {
+            return ResponseEntity.ok(movieService.updateMovie(id, movie));
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
+
+    // Admin: remove a movie
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteMovie(@PathVariable Long id) {
+        try {
+            movieService.deleteMovie(id);
+            return ResponseEntity.ok("Movie removed from catalogue successfully");
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
 }
